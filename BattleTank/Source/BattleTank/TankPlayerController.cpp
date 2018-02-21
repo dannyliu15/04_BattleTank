@@ -5,7 +5,18 @@
 
 ATank * ATankPlayerController::GetControlledTank() const
 {
-	return Cast<ATank>(GetPawn());
+	
+	ATank* OwnerTank = Cast<ATank>(GetPawn());
+	if (!OwnerTank)
+	{
+		UE_LOG(LogTemp, Error, TEXT("TankPlayerController Error: Failed to find OwnerTank"));
+	}
+
+	return OwnerTank;
 }
 
-
+void ATankPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+	UE_LOG(LogTemp, Warning, TEXT("TankPlayerController Owner: %s"), *GetControlledTank()->GetName());
+}
