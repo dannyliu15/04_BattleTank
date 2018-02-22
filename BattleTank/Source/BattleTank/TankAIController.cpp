@@ -5,17 +5,36 @@
 ATank * ATankAIController::GetControlledTank() const
 {
 
-	ATank* OwnerTank = Cast<ATank>(GetPawn());
+	APawn* OwnerTank = GetPawn();
 	if (!OwnerTank)
 	{
 		UE_LOG(LogTemp, Error, TEXT("TankAIController Error: Failed to find OwnerTank"));
 	}
 
-	return OwnerTank;
+	return Cast<ATank>(OwnerTank);
 }
 
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("TankAIController Owner: %s"), *GetControlledTank()->GetName());
+	if (GetControlledTank() )
+	{
+		UE_LOG(LogTemp, Warning, TEXT("TankAIController Owner: %s"), *GetControlledTank()->GetName());
+	}
+
+	if (GetPlayerTank() )
+	{
+		UE_LOG(LogTemp, Warning, TEXT("TankAIController PlayerTank: %s"), *GetPlayerTank()->GetName());
+	}
+}
+
+
+ATank * ATankAIController::GetPlayerTank() const
+{
+	APawn* PlayerTank =  GetWorld()->GetFirstPlayerController()->GetPawn() ;
+	if (!PlayerTank)
+	{
+		UE_LOG(LogTemp, Error, TEXT("TankAIController Error: GetPlayerTank failed !"));
+	}
+	return Cast<ATank>(PlayerTank);
 }
