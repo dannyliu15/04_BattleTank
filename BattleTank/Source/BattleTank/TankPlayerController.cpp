@@ -6,17 +6,37 @@
 ATank * ATankPlayerController::GetControlledTank() const
 {
 	
-	ATank* OwnerTank = Cast<ATank>(GetPawn());
+	APawn* OwnerTank = GetPawn();
 	if (!OwnerTank)
 	{
 		UE_LOG(LogTemp, Error, TEXT("TankPlayerController Error: Failed to find OwnerTank"));
+		return nullptr;
 	}
 
-	return OwnerTank;
+	return Cast<ATank>(OwnerTank) ;
 }
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("TankPlayerController Owner: %s"), *GetControlledTank()->GetName());
+	ATank* OwnerTankPtr = GetControlledTank();
+	if (OwnerTankPtr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("TankPlayerController Owner: %s"), *OwnerTankPtr->GetName());
+	}
+}
+
+void ATankPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
+void ATankPlayerController::AimTowardsCrosshair()
+{
+	if (!GetControlledTank()) { return; }
+
+	// Get world location if linetrace through crosshair
+	// If it hits the landscape
+		// Tell controlled tank to aim at this point
+
 }
