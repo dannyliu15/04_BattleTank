@@ -25,6 +25,8 @@ public:
 
 	virtual void BeginPlay() override;
 	
+	void GetPlayerLocation(FVector& locatiion) const;
 
+	virtual void Tick(float DeltaTime) override;
 	
 };
