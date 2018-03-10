@@ -32,5 +32,13 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+
+private:
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float FireSpeed = 100000.0f; // TODO tweak the starting fire speed
 	
 };

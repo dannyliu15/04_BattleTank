@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "Engine/World.h"
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
@@ -26,6 +27,11 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	// Log out Aiming location
-	void AimAt(FVector HitLocation);
+	void AimAt(FVector HitLocation, float FireSpeed);
+
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+
+private:
+	UStaticMeshComponent * BarralReference = nullptr;
 	
 };

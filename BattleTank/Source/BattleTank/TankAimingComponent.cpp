@@ -32,14 +32,13 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation)
+void UTankAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 {
-	FString ComponentName = GetName();
-	FString OwnerName = "GetOwnerNameError";
-	if (GetOwner())
-	{
-		OwnerName = GetOwner()->GetName();
-	}
-	UE_LOG(LogTemp, Warning, TEXT("%s of %s is aiming at %s"), *ComponentName, *OwnerName,*HitLocation.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("Fire at %f" ), FireSpeed);
+}
+
+void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
+{
+	BarralReference = BarrelToSet;
 }
 
