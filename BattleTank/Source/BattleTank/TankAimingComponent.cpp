@@ -14,30 +14,12 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-
 void UTankAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 {
-	if (!BarralReference) { return; }
+	if (!BarrelRef) { return; }
 
 	FVector OutLaunchVelocity;
-	FVector StartLocation = BarralReference->GetSocketLocation(FName("Projectile"));
+	FVector StartLocation = BarrelRef->GetSocketLocation(FName("Projectile"));
 
 	// Calculate the OutLaunchVelocity
 	if (UGameplayStatics::SuggestProjectileVelocity( 
@@ -54,8 +36,10 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 		)
 	{
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
-		FString OwnerName = GetOwner()->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"), *OwnerName, *AimDirection.ToString());
+		//FString OwnerName = GetOwner()->GetName();
+		//UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"), *OwnerName, *AimDirection.ToString());
+		MoveBarrelToward(AimDirection);
+	
 	}
 
 	// If no solution found do nothing
@@ -64,6 +48,20 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 
 void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
 {
-	BarralReference = BarrelToSet;
+	BarrelRef = BarrelToSet;
+}
+
+void UTankAimingComponent::MoveBarrelToward(FVector AimDirection)
+{
+	// work-out difference between current barrel rotation and AimDirection
+	FRotator BarrelRotator = BarrelRef->GetForwardVector().Rotation();
+	FRotator AimAsRotator = AimDirection.Rotation();
+	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
+	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *DeltaRotator.ToString() );
+
+	// move teh barrel the right amount this frame
+
+	// Given a max elevation speed, and the frame time
+
 }
 
