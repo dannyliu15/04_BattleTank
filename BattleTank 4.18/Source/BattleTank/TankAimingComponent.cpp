@@ -9,7 +9,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = true; // TODO: Should this tick?
 
 	// ...
 }
@@ -40,10 +40,14 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float FireSpeed)
 		//FString OwnerName = GetOwner()->GetName();
 		//UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"), *OwnerName, *AimDirection.ToString());
 		MoveBarrelToward(AimDirection);
+	    auto Time = GetWorld()->GetTimeSeconds();
+        UE_LOG(LogTemp, Warning, TEXT("%f: AimDirection Found!"), Time);
 	
 	}
 
-	// If no solution found do nothing
+	// If no solution found print UE_LOG
+    auto Time = GetWorld()->GetTimeSeconds();
+    UE_LOG(LogTemp, Warning, TEXT("%f: AimDirection Not Found!"), Time);
 	
 }
 
